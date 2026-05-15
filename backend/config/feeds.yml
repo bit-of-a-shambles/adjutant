@@ -1,0 +1,16 @@
+feeds:
+  - url: "https://hnrss.org/frontpage"
+    category: "tech"
+    refresh_minutes: 15
+
+  - url: "https://feeds.arstechnica.com/arstechnica/index"
+    category: "tech"
+    refresh_minutes: 30
+
+  - url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+    category: "world"
+    refresh_minutes: 30
+
+  - url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    category: "security"
+    refresh_minutes: 60

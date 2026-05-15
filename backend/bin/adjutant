@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "fileutils"
+require_relative "../lib/adjutant"
+
+# Ensure tmp directory exists
+FileUtils.mkdir_p("/tmp/adjutant")
+
+puts <<~BANNER
+  ╔══════════════════════════════════════╗
+  ║         ADJUTANT v0.1.0              ║
+  ║    Tactical AI Assistant Online      ║
+  ╚══════════════════════════════════════╝
+BANNER
+
+server = Adjutant::Server.new
+server.start

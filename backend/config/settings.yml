@@ -1,0 +1,24 @@
+server:
+  host: "127.0.0.1"
+  port: 9247
+
+voice:
+  # Samantha — best quality female voice on macOS, processed into Adjutant comm style
+  tts_voice: "Samantha"
+  tts_rate: 185
+  # Optional: set a SuperWhisper mode key for a custom dictation mode.
+  # Find this in SuperWhisper > Modes > your mode > key.
+  # Leave blank to use SuperWhisper's default mode.
+  superwhisper_mode_key: ~
+
+capture:
+  width: 960
+  quality: 60
+
+claude_code:
+  # Default working directory for Claude Code tasks
+  working_dir: "~"
+
+persona:
+  name: "Adjutant"
+  address: "Commander"

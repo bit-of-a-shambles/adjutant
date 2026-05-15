@@ -1,0 +1,23 @@
+# mise (contains API keys)
+.mise.toml
+
+# Ruby
+vendor/bundle
+.bundle
+
+# Node
+frontend/node_modules/
+
+# SQLite
+backend/db/*.sqlite3
+
+# Temp files
+/tmp/
+*.aiff
+*.wav
+
+# macOS
+.DS_Store
+
+# Electron
+frontend/out/
