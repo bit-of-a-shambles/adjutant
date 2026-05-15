@@ -2,7 +2,7 @@
 
 An AI desktop overlay assistant. A green wireframe face sits in the corner of your screen, connected to Claude, ready to answer questions, execute tasks, read your screen, and brief you on RSS feeds — all in a tactical comm-filtered voice.
 
-![Adjutant](https://upload.wikimedia.org/wikipedia/en/2/2e/StarCraft_Adjutant.png)
+![Adjutant screenshot](assets/screenshot.png)
 
 ## Features
 
