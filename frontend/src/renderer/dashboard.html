@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' ws://127.0.0.1:9247; script-src 'self' 'unsafe-inline'; connect-src ws://127.0.0.1:9247">
+  <title>Adjutant — Intelligence Console</title>
+  <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+  <div id="dashboard">
+    <nav id="sidebar">
+      <div id="sidebar-header">
+        <span class="logo">◆</span> ADJUTANT
+      </div>
+      <div id="nav-items">
+        <button class="nav-item active" data-category="all">ALL FEEDS</button>
+        <button class="nav-item" data-category="tech">TECH</button>
+        <button class="nav-item" data-category="world">WORLD</button>
+        <button class="nav-item" data-category="security">INTEL / SECURITY</button>
+        <button class="nav-item" data-category="oil">ENERGY</button>
+        <button class="nav-item" data-category="finance">FINANCE</button>
+      </div>
+      <div id="sidebar-footer">
+        <div id="unread-total">UNREAD: <span id="unread-count">0</span></div>
+        <button id="briefing-btn">◉ BRIEFING</button>
+        <button id="mark-all-read-btn">✓ MARK ALL READ</button>
+      </div>
+    </nav>
+
+    <main id="content">
+      <div id="toolbar">
+        <input type="text" id="search-input" placeholder="Search intelligence..." autocomplete="off" spellcheck="false">
+        <span id="result-count"></span>
+      </div>
+      <div id="feed-list"></div>
+    </main>
+
+    <aside id="analysis-panel" class="hidden">
+      <div id="analysis-header">
+        <span>◆ ADJUTANT ANALYSIS</span>
+        <button id="analysis-close">✕</button>
+      </div>
+      <div id="analysis-content"></div>
+    </aside>
+
+    <footer id="ask-bar">
+      <span class="ask-label">ASK ADJUTANT:</span>
+      <input type="text" id="ask-input" placeholder="Analyze selected items..." autocomplete="off" spellcheck="false">
+      <button id="ask-btn">ASK</button>
+    </footer>
+  </div>
+
+  <div id="scanlines"></div>
+  <script src="dashboard.js"></script>
+</body>
+</html>

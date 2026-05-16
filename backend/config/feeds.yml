@@ -14,3 +14,15 @@ feeds:
   - url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
     category: "security"
     refresh_minutes: 60
+
+  - url: "https://oilprice.com/rss/main"
+    category: "oil"
+    refresh_minutes: 30
+
+  - url: "https://www.rigzone.com/news/rss/rigzone_latest.aspx"
+    category: "oil"
+    refresh_minutes: 30
+
+  - url: "https://www.ft.com/rss/home"
+    category: "finance"
+    refresh_minutes: 30

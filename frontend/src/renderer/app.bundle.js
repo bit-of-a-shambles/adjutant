@@ -278,7 +278,18 @@ class LipSync {
     this.head = head;
     this.animController = animController;
     this.audioContext = null;
+    this.currentSource = null;
     this.isActive = false;
+  }
+
+  stop() {
+    this.isActive = false;
+    this.animController.setLipSyncActive(false);
+    this.head.setMorph('jawOpen', 0);
+    if (this.currentSource) {
+      try { this.currentSource.stop(); } catch (e) {}
+      this.currentSource = null;
+    }
   }
 
   async playAndSync(audioPath) {
@@ -300,6 +311,7 @@ class LipSync {
       analyser.connect(this.audioContext.destination);
 
       this.isActive = true;
+      this.currentSource = source;
       this.animController.setLipSyncActive(true);
       source.start(0);
 
@@ -315,6 +327,7 @@ class LipSync {
 
       source.onended = () => {
         this.isActive = false;
+        this.currentSource = null;
         this.animController.setLipSyncActive(false);
         this.head.setMorph('jawOpen', 0);
       };
@@ -472,6 +485,11 @@ class VoiceIndicator {
       case 'state':
         animController.setState(data.state);
         voiceIndicator.setState(data.state);
+        if (data.state === 'speaking' || data.state === 'processing') {
+          stopBtn.classList.add('visible');
+        } else if (data.state === 'idle') {
+          stopBtn.classList.remove('visible');
+        }
         break;
       case 'transcript':
         if (data.source === 'user') transcript.addUserText(data.text);
@@ -492,6 +510,23 @@ class VoiceIndicator {
         break;
     }
   }
+
+  // Stop button
+  const stopBtn = document.getElementById('stop-btn');
+  stopBtn.addEventListener('click', () => {
+    send({ type: 'stop_speech' });
+    lipSync.stop();
+    animController.setState('idle');
+    voiceIndicator.setState('idle');
+    transcript.endStream();
+    stopBtn.classList.remove('visible');
+  });
+
+  // Dashboard button
+  const dashboardBtn = document.getElementById('dashboard-btn');
+  dashboardBtn.addEventListener('click', () => {
+    require('electron').ipcRenderer.send('open-dashboard');
+  });
 
   // Text input
   const textInput = document.getElementById('text-input');

@@ -24,9 +24,9 @@ module Adjutant
         "--output-format", "stream-json",
         "--verbose",
         "--dangerously-skip-permissions",
-        task,
         chdir: @working_dir
       ) do |stdin, stdout, stderr, wait_thread|
+        stdin.write(task)
         stdin.close
 
         stdout.each_line do |line|

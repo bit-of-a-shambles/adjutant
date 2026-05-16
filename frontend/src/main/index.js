@@ -1,7 +1,8 @@
-const { app, BrowserWindow, Tray, Menu, globalShortcut, nativeImage, screen } = require('electron');
+const { app, BrowserWindow, Tray, Menu, globalShortcut, nativeImage, screen, ipcMain } = require('electron');
 const path = require('path');
 
 let mainWindow;
+let dashboardWindow;
 let tray;
 
 const WINDOW_WIDTH = 350;
@@ -39,6 +40,47 @@ function createWindow() {
   });
 }
 
+function createDashboardWindow() {
+  if (dashboardWindow) {
+    dashboardWindow.focus();
+    return;
+  }
+
+  dashboardWindow = new BrowserWindow({
+    width: 1100,
+    height: 750,
+    minWidth: 800,
+    minHeight: 500,
+    backgroundColor: '#0a0f0a',
+    frame: true,
+    titleBarStyle: 'hiddenInset',
+    resizable: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
+  });
+
+  dashboardWindow.loadFile(path.join(__dirname, '..', 'renderer', 'dashboard.html'));
+
+  dashboardWindow.webContents.on('did-finish-load', () => {
+    dashboardWindow.webContents.send('init', { wsUrl: WS_URL });
+  });
+
+  dashboardWindow.on('closed', () => {
+    dashboardWindow = null;
+  });
+}
+
+function toggleDashboard() {
+  if (dashboardWindow) {
+    dashboardWindow.close();
+  } else {
+    createDashboardWindow();
+  }
+}
+
 function createTray() {
   // Simple tray icon (green circle)
   const icon = nativeImage.createFromBuffer(
@@ -62,6 +104,10 @@ function createTray() {
         }
       },
     },
+    {
+      label: 'Dashboard',
+      click: () => toggleDashboard(),
+    },
     { type: 'separator' },
     {
       label: 'Quit Adjutant',
@@ -79,7 +125,19 @@ function registerShortcuts() {
   globalShortcut.register('CommandOrControl+Shift+A', () => {
     mainWindow.webContents.send('push-to-talk-toggle');
   });
+
+  // Dashboard toggle: Cmd+Shift+D
+  const registered = globalShortcut.register('CommandOrControl+Shift+D', () => {
+    toggleDashboard();
+  });
+  if (!registered) {
+    console.error('Failed to register Cmd+Shift+D shortcut');
+  }
 }
+
+ipcMain.on('open-dashboard', () => {
+  createDashboardWindow();
+});
 
 app.whenReady().then(() => {
   createWindow();
